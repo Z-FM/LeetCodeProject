@@ -18,17 +18,21 @@ public class CommonAdaptor {
 
     private static RunScript rs;
 
-    static void init(){
+    static void init() {
         rs = new RunScript("src/main/resources/CommonAdaptor.js");
-        rs.setVar("Logger", logger);
+        rs.setVar("common_log", logger);
     }
 
-    public static void main(String[] args) throws ScriptException, FileNotFoundException {
+    public static void main(String[] args) throws ScriptException, FileNotFoundException, NoSuchMethodException {
         init();
         StringBuilder script = new StringBuilder();
-        script.append("var obj = new Object();");
-        script.append("obj.process = function(name){return ( COM.Logger.info(\'logger.info.test:{}\',name);}");
+//        script.append("let obj = new Object();");
+        script.append("function process(name){ COM.LOGGER.info(\'logger.info.test:{}\',name);}");
+        rs.getScriptEngine().eval(script.toString());
         rs.start();
+        Invocable inv = rs.getInvocable();
+        Object o = inv.invokeFunction("process", "test function result");
+        System.out.println(o);
     }
 
 }

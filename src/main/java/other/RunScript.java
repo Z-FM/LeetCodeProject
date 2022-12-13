@@ -1,5 +1,6 @@
 package other;
 
+import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -38,6 +39,14 @@ public class RunScript {
      */
     public void start() throws FileNotFoundException, ScriptException {
         engine.eval(new FileReader(fileName));
+    }
+
+    public Invocable getInvocable() {
+        return (Invocable) engine;
+    }
+
+    public ScriptEngine getScriptEngine() {
+        return engine;
     }
 
 }
